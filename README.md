@@ -2,7 +2,7 @@
 
 This repository presents a Gaussian Blur Filter tailored for DirectX 12 applications, specifically enhancing ImGui interfaces. The filter facilitates the integration of background blur effects into ImGui windows or any DirectX 12 project, leveraging compute shaders for optimal performance and simplicity. Its design as a standalone library ensures seamless integration across diverse DirectX 12 environments, with compatibility spanning various DXGI_FORMAT color spaces to accommodate different render target configurations. Microsoft's sample projects for Gaussian blur are annoyingly convoluted and overengineered, so I created this to provide a cleaner, more practical solution.
 
-![Demo](Imgui Dx12 Blur.mp4)
+![Demo](Imgui_Dx12_Blur_Demo.mp4)
 
 ## Features
 
