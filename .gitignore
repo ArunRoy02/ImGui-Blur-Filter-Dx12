@@ -1,15 +1,29 @@
 # Prerequisites
 *.d
+*.recipe
 
 # Compiled Object files
 *.slo
 *.lo
 *.o
 *.obj
+*.vsidx
+*.suo
+*.db
+*.json
+*.tlog
+*.iobj
+*.ipdb
+*.log
+*.pdb
+*.txt
+*.ini
+*.pdb
 
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so

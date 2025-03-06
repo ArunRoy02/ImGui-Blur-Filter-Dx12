@@ -80,12 +80,14 @@ void BlurFilter::BuildResources ( )
     auto hr = md3dDevice->CreateCommittedResource ( &heapProperties, D3D12_HEAP_FLAG_NONE, &texDesc, D3D12_RESOURCE_STATE_COMMON, nullptr, IID_PPV_ARGS ( &mBlurMap0 ) );
     if ( FAILED ( hr ) )
     {
+        printf ( "[!] Failed to create mBlurMap0 resource\n" );
         return;
     }
 
     hr = md3dDevice->CreateCommittedResource ( &heapProperties, D3D12_HEAP_FLAG_NONE, &texDesc, D3D12_RESOURCE_STATE_COMMON, nullptr, IID_PPV_ARGS ( &mBlurMap1 ) );
     if ( FAILED ( hr ) )
     {
+        printf ( "[!] Failed to create mBlurMap1 resource\n" );
         return;
     }
 }
@@ -339,11 +341,17 @@ void BlurFilter::InitializeComputeRootSignature ( )
     ID3DBlob* pSerializedRootSig = nullptr;
     HRESULT hr = D3D12SerializeRootSignature ( &CompRootSigDesc, D3D_ROOT_SIGNATURE_VERSION_1, &pSerializedRootSig, nullptr );
     if ( FAILED ( hr ) )
+    {
+        printf ( "[!] Failed to serialize root signature\n" );
         return;
+    }        
 
     hr = md3dDevice->CreateRootSignature ( 0, pSerializedRootSig->GetBufferPointer ( ), pSerializedRootSig->GetBufferSize ( ), IID_PPV_ARGS ( &mComputeRootSignature ) );
     if ( FAILED ( hr ) )
+    {
+        printf ( "[!] Failed to create root signature\n" );
         return;
+    }
 }
 
 void BlurFilter::InitializeBlurPSO ( )
@@ -351,11 +359,17 @@ void BlurFilter::InitializeBlurPSO ( )
 #ifndef BLUR_PRECOMPILED_COMPUTER_SHADER
     auto hr = D3DCompileFromFile ( COMPUTE_SHADER_PATH, nullptr, nullptr, "HorzBlurCS", "cs_5_0", 0, 0, &mShaders[HorzBlurCS], nullptr );
     if ( FAILED ( hr ) )
+    {
+        printf ( "[!] Failed to compile HorzBlurCS\n" );
         return;
+    }
 
     hr = D3DCompileFromFile ( COMPUTE_SHADER_PATH, nullptr, nullptr, "VertBlurCS", "cs_5_0", 0, 0, &mShaders[VertBlurCS], nullptr );
     if ( FAILED ( hr ) )
+    {
+        printf ( "[!] Failed to compile VertBlurCS\n" );
         return;
+    }
 
     D3D12_COMPUTE_PIPELINE_STATE_DESC HorzBlurPsoDesc = {};
     HorzBlurPsoDesc.pRootSignature = mComputeRootSignature;
@@ -365,6 +379,7 @@ void BlurFilter::InitializeBlurPSO ( )
     hr = md3dDevice->CreateComputePipelineState ( &HorzBlurPsoDesc, IID_PPV_ARGS ( &mPSOs[HorzBlurPso] ) );
     if ( FAILED ( hr ) )
     {
+        printf ( "[!] Failed to create HorzBlurPso from compiled shader\n" );
         return;
     }
 
@@ -376,6 +391,7 @@ void BlurFilter::InitializeBlurPSO ( )
     hr = md3dDevice->CreateComputePipelineState ( &VertBlurPsoDesc, IID_PPV_ARGS ( &mPSOs[VertBlurPso] ) );
     if ( FAILED ( hr ) )
     {
+        printf ( "[!] Failed to create VertBlurPso from compiled shader\n" );
         return;
     }
 #else
@@ -388,6 +404,7 @@ void BlurFilter::InitializeBlurPSO ( )
     auto hr = md3dDevice->CreateComputePipelineState ( &HorzBlurPsoDesc, IID_PPV_ARGS ( &mPSOs[HorzBlurPso] ) );
     if ( FAILED ( hr ) )
     {
+        printf ( "[!] Failed to create HorzBlurPso from pre-compiled shader\n" );
         return;
     }
 
@@ -399,6 +416,7 @@ void BlurFilter::InitializeBlurPSO ( )
     hr = md3dDevice->CreateComputePipelineState ( &VertBlurPsoDesc, IID_PPV_ARGS ( &mPSOs[VertBlurPso] ) );
     if ( FAILED ( hr ) )
     {
+        printf ( "[!] Failed to create VertBlurPso from pre-compiled shader\n" );
         return;
     }
 #endif
