@@ -2,9 +2,9 @@
 #include "shaders.h"
 
 // Choose between precompiled compute shader or compile shader at runtime with D3DCompile
-//#define BLUR_PRECOMPILED_COMPUTER_SHADER
+//#define BLUR_PRECOMPILED_COMPUTE_SHADER
 
-#ifndef BLUR_PRECOMPILED_COMPUTER_SHADER
+#ifndef BLUR_PRECOMPILED_COMPUTE_SHADER
 #include <d3dcompiler.h>
 #pragma comment(lib, "d3dcompiler")
 #define COMPUTE_SHADER_PATH L"..\\..\\..\\Blur Filter\\BlurCS.hlsl"
@@ -356,7 +356,7 @@ void BlurFilter::InitializeComputeRootSignature ( )
 
 void BlurFilter::InitializeBlurPSO ( )
 {
-#ifndef BLUR_PRECOMPILED_COMPUTER_SHADER
+#ifndef BLUR_PRECOMPILED_COMPUTE_SHADER
     auto hr = D3DCompileFromFile ( COMPUTE_SHADER_PATH, nullptr, nullptr, "HorzBlurCS", "cs_5_0", 0, 0, &mShaders[HorzBlurCS], nullptr );
     if ( FAILED ( hr ) )
     {
